@@ -23,7 +23,7 @@ class PDFTranslator:
                       pages:Optional[int] = None):
 
         # 原pdf解析
-        self.book = self.pdf_parser.parse_pdf(input_file=input_file, handle_pages=pages)
+        self.book = self.pdf_parser.parse_pdf(input_file=input_file, handle_pages=pages,target_language=target_language)
 
         for page_idx,page in enumerate(self.book.pages):
             for content_idx,content in enumerate(page.contents):

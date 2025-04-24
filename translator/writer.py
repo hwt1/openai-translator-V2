@@ -1,3 +1,7 @@
+import os.path
+import time
+from pathlib import Path
+
 from reportlab.lib import pagesizes, colors
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
@@ -19,12 +23,11 @@ class Writer:
             LOG.error(f"不支持文件类型: {output_file_format}")
             return ""
 
-        LOG.info(f"翻译完成，文件保存至: {output_file_path}")
 
 
     def _save_translated_book_pdf(self,book:Book,output_file_path:str = None):
         if output_file_path is None:
-            output_file_path = book.pdf_file_path.replace(".pdf","_translated.pdf")
+            output_file_path =Writer.get_output_path(file_path=book.pdf_file_path,target_language=book.target_language)
         LOG.info(f"开始导出: {output_file_path}")
 
         font_path = "../fonts/simsun.ttc"  # 请将此路径替换为您的字体文件路径
@@ -69,7 +72,7 @@ class Writer:
 
     def _save_translated_book_markdown(self, book: Book, output_file_path: str = None):
         if output_file_path is None:
-            output_file_path = book.pdf_file_path.replace('.pdf', f'_translated.md')
+            output_file_path =Writer.get_output_path(file_path=book.pdf_file_path,target_language=book.target_language)
 
         LOG.info(f"开始导出: {output_file_path}")
 
@@ -98,3 +101,27 @@ class Writer:
 
         LOG.info(f"翻译完成: {output_file_path}")
         return output_file_path
+
+    @staticmethod
+    def get_output_path(file_path, target_language):
+        # 翻译后文件输出路径
+        timestamp=str(int(time.time() * 1000))
+
+        # 分离文件名和扩展名
+        file_path = Path(file_path)
+        file_name = file_path.name
+        name,ext = os.path.splitext(file_name)
+
+        # 构建翻译后的文件名
+        translated_file_name = f"{name}_translated_{target_language}_{timestamp}{ext}"
+
+        # 构建完整保存路径（放在 translated_files/ 目录）
+        output_file_path = os.path.join('translated_files',translated_file_name)
+
+        print(output_file_path)
+        return output_file_path
+
+
+
+if __name__ == '__main__':
+    Writer.get_output_path('test.pdf','chinese')

@@ -12,8 +12,8 @@ from utils.logger import LOG
 
 class PDFParser:
     # 解析pdf文件，将pdf文件封装成 book对象
-    def parse_pdf(self,input_file:Optional[str]=None,handle_pages:Optional[int] = None):
-        book = Book(input_file)
+    def parse_pdf(self,target_language,input_file:Optional[str]=None,handle_pages:Optional[int] = None):
+        book = Book(input_file,target_language=target_language)
 
         # 读取 pdf文件
         with pdfplumber.open(input_file) as pdf:

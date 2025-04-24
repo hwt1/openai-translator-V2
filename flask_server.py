@@ -49,7 +49,7 @@ def translation():
             # 返回翻译后的文件
             return send_file(output_file_path,as_attachment=True)
     except Exception as e:
-        LOG.error(f'/translation 请求异常，{e}')
+        LOG.exception('/translation 请求异常！')
         response = {
             'status':'error',
             'message':str(e)
