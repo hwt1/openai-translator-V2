@@ -18,7 +18,8 @@ class PDFParser:
         # 读取 pdf文件
         with pdfplumber.open(input_file) as pdf:
             if handle_pages is not None and handle_pages > len(pdf.pages):
-                raise PageOutOfRangeException(len(pdf.pages),handle_pages)
+                handle_pages = len(pdf.pages)
+                # raise PageOutOfRangeException(len(pdf.pages),handle_pages)
 
             # 获取需要处理的 pdf中的 page对象
             if handle_pages is None:

@@ -19,13 +19,14 @@ def initialize_translator():
     Translator = PDFTranslator(config.model_name)
 
 # gradio界面方式
-def translation(input_file,source_language,target_language,output_file_format):
-    LOG.debug(f"[翻译任务]\n源文件: {input_file.name}\n源语言: {source_language}\n目标语言: {target_language}")
+def translation(input_file,source_language,target_language,output_file_format,chinese_style):
+    LOG.debug(f"[翻译任务]\n源文件: {input_file.name}\n源语言: {source_language}\n目标语言: {target_language},语言风格：{chinese_style}")
     output_file_path = Translator.translate_pdf(
         input_file=input_file,
         source_language=source_language,
         target_language=target_language,
-        output_file_format=output_file_format
+        output_file_format=output_file_format,
+        chinese_style=chinese_style
     )
     return output_file_path
 
@@ -39,6 +40,9 @@ def launch_gradio():
             gr.Textbox(label='原语言（默认英文）',placeholder='English',value='English'),
             gr.Textbox(label='目标语言（默认中文）',placeholder='Chinese',value='Chinese'),
             gr.Radio(["markdown", "pdf"], value='markdown',label="导出文件类型", info="请选择译文的文件类型"),
+            gr.Dropdown(
+                ['不选',"鲁迅", "张爱玲", "余华"], label="中文风格", info="当目标语言是中文时，可以选择的翻译风格，其他语言无法保证风格一致"
+            ),
         ],
         outputs=[
             gr.File(label='下载翻译文件')

@@ -32,13 +32,14 @@ class TranslationChain:
 
         self.chain = LLMChain(llm=chat_model,prompt=chat_prompt,verbose=verbose)
 
-    def invoke(self,inputs:str,source_language:str,target_language:str) ->(str,bool):
+    def invoke(self,inputs:str,source_language:str,target_language:str,chinese_style:str) ->(str,bool):
         result = ""
         try:
             chain_result = self.chain.invoke({
                 'inputs':inputs,
                 'source_language':source_language,
-                'target_language':target_language
+                'target_language':target_language,
+                'style':chinese_style
             })
             result = chain_result['text']
 
