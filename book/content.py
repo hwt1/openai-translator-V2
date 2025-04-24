@@ -37,6 +37,9 @@ class Content:
         self.translation = translation
         self.status = status
 
+    def __str__(self):
+        return self.original
+
 # 定义一个 表格的内容类，通过 pandas来处理表格内容
 class TableContent(Content):
     def __init__(self,data,translation=None):

@@ -10,20 +10,22 @@ from utils.logger import LOG
 
 
 class Writer:
-    def save_translated_book(self,book:Book,output_file_path:str=None,file_format:str = "PDF"):
-        if file_format.lower() == "pdf":
-            self._save_translated_book_pdf(book, output_file_path)
-        elif file_format.lower() == "markdown":
-            self._save_translated_book_markdown(book, output_file_path)
+    def save_translated_book(self,book:Book,output_file_path:str=None,output_file_format:str = "PDF"):
+        if output_file_format.lower() == "pdf":
+            return self._save_translated_book_pdf(book, output_file_path)
+        elif output_file_format.lower() == "markdown":
+            return self._save_translated_book_markdown(book, output_file_path)
         else:
-            raise ValueError(f"Unsupported file format: {file_format}")
+            LOG.error(f"不支持文件类型: {output_file_format}")
+            return ""
+
+        LOG.info(f"翻译完成，文件保存至: {output_file_path}")
 
 
     def _save_translated_book_pdf(self,book:Book,output_file_path:str = None):
         if output_file_path is None:
             output_file_path = book.pdf_file_path.replace(".pdf","_translated.pdf")
-        LOG.info(f"pdf_file_path: {book.pdf_file_path}")
-        LOG.info(f"开始翻译: {output_file_path}")
+        LOG.info(f"开始导出: {output_file_path}")
 
         font_path = "../fonts/simsun.ttc"  # 请将此路径替换为您的字体文件路径
         pdfmetrics.registerFont(TTFont("SimSun", font_path))
@@ -63,13 +65,14 @@ class Writer:
                 story.append(PageBreak())
         doc.build(story)
         LOG.info(f"翻译完成: {output_file_path}")
+        return output_file_path
 
     def _save_translated_book_markdown(self, book: Book, output_file_path: str = None):
         if output_file_path is None:
             output_file_path = book.pdf_file_path.replace('.pdf', f'_translated.md')
 
-        LOG.info(f"pdf_file_path: {book.pdf_file_path}")
-        LOG.info(f"开始翻译: {output_file_path}")
+        LOG.info(f"开始导出: {output_file_path}")
+
         with open(output_file_path, 'w', encoding='utf-8') as output_file:
             # Iterate over the pages and contents
             for page in book.pages:
@@ -94,3 +97,4 @@ class Writer:
                     output_file.write('---\n\n')
 
         LOG.info(f"翻译完成: {output_file_path}")
+        return output_file_path

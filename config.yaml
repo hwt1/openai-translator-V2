@@ -1,11 +1,5 @@
-OpenAIModel:
-  model: "gpt-3.5-turbo"
-  api_key: "sk-VTl6bkryB3qLSDis917a7541D93145B9B7553c56803eE83b"
-  base_url: "https://vip.apiyi.com/v1"
-
-common:
-  book: "tests/test.pdf"
-  file_format: "markdown"
-
-UIBaseUrl: http://localhost:8080/ # 前端路径
-defaultTargetLanguage: "中文"
+model_name: "gpt-3.5-turbo"
+input_file: "tests/test.pdf"
+output_file_format: "markdown"
+source_language: "English"
+target_language: "Chinese"

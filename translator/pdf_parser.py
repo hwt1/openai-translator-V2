@@ -12,11 +12,11 @@ from utils.logger import LOG
 
 class PDFParser:
     # 解析pdf文件，将pdf文件封装成 book对象
-    def parse_pdf(self,pdf_file_path:Optional[str]=None,pdf_file:Optional[FileStorage]=None,handle_pages:Optional[int] = None):
-        book = Book(pdf_file_path)
+    def parse_pdf(self,input_file:Optional[str]=None,handle_pages:Optional[int] = None):
+        book = Book(input_file)
 
         # 读取 pdf文件
-        with pdfplumber.open(pdf_file_path if pdf_file_path else pdf_file) as pdf:
+        with pdfplumber.open(input_file) as pdf:
             if handle_pages is not None and handle_pages > len(pdf.pages):
                 raise PageOutOfRangeException(len(pdf.pages),handle_pages)
 
