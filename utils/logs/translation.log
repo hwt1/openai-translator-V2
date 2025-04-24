@@ -1,0 +1,4 @@
+2025-04-08 10:59:07.531 | DEBUG    | __main__:<module>:34 - This is a debug message.
+2025-04-08 10:59:07.532 | INFO     | __main__:<module>:35 - This is an info message.
+2025-04-08 10:59:07.532 | WARNING  | __main__:<module>:36 - This is a warning message.
+2025-04-08 10:59:07.532 | ERROR    | __main__:<module>:37 - This is an error message.
